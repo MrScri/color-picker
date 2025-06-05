@@ -1,22 +1,25 @@
-
 <head>
   <meta charset="UTF-8">
   <title>اختيار اللون</title>
 
   <style>
+  
+    /* تنسيق عام للقائمة */
     .color-picker-container {
       position: fixed;
-      top: 3%;
-      left: 55%;
+      top: 3%;  /* مكان المربعات من الأعلى */
+      left: 55%;  /* في الكمبيوتر، تبقى في منتصف الشاشة */
       z-index: 9999;
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 5px;
       flex-wrap: wrap;
-      transform: translateX(-50%);
-      max-width: 90%;
+      transform: translateX(-50%);  /* لجعلها في المنتصف */
+      max-width: 90%;  /* تحديد الحد الأقصى لعرض الحاوية */
     }
+
+    /* تنسيق الألوان */
     .color-picker {
       width: 16px;
       height: 16px;
@@ -25,65 +28,73 @@
       border: 1px solid white;
       box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
     }
+
     .color-picker.selected {
       outline: 2px solid black;
     }
+
+    /* تحسين التنسيق على الشاشات الصغيرة */
     @media screen and (max-width: 600px) {
       .color-picker-container {
-        top: 1%;
-        right: 5%;
-        left: unset;
-        transform: unset;
-        gap: 8px;
+        top: 1%;  /* تغيير المسافة من الأعلى في الهواتف */
+        right: 5%;  /* وضعها على اليمين */
+        left: unset;  /* إلغاء تأثير الـ left */
+        transform: unset;  /* إلغاء الترجمة على المحور X */
+        gap: 8px;  /* زيادة المسافة بين الألوان */
       }
+
       .color-picker {
-        width: 20px;
+        width: 20px;  /* تكبير حجم الألوان في الهواتف */
         height: 20px;
       }
     }
+
+    /* تحسين التنسيق على الشاشات الكبيرة */
     @media screen and (min-width: 600px) {
       .color-picker-container {
-        top: 1%;
+        top: 1%;  /* في الأجهزة الكبيرة تبقى في أعلى الشاشة */
         left: 55%;
-        transform: translateX(-50%);
+        transform: translateX(-50%);  /* يبقى في المنتصف */
         gap: 5px;
       }
+
       .color-picker {
-        width: 16px;
+        width: 16px;  /* الحجم الطبيعي للألوان */
         height: 16px;
       }
     }
   </style>
 
   <script>
-    var _0x1a3b=["\x67\x65\x74\x49\x74\x65\x6D","\x73\x65\x6C\x65\x63\x74\x65\x64\x53\x74\x79\x6C\x65"]; 
-    var savedStyle = localStorage.getItem("selectedStyle") || "1";
+    const savedStyle = localStorage.getItem("selectedStyle") || "1";
 
-    var link = document.createElement("link");
+    const link = document.createElement("link");
     link.rel = "stylesheet";
     link.id = "dynamic-style";
-    link.href = "https://raw.githack.com/khaledry/watar0/main/watar0000"+savedStyle+".css";
+    link.href = `https://raw.githack.com/khaledry/watar0/main/watar0000${savedStyle}.css`;
     document.head.appendChild(link);
 
     function changeStyle(num) {
-      document.getElementById("dynamic-style").href = "https://raw.githack.com/khaledry/watar0/main/watar0000"+num+".css";
+      document.getElementById("dynamic-style").href = `https://raw.githack.com/khaledry/watar0/main/watar0000${num}.css`;
       localStorage.setItem("selectedStyle", num);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      var loginExists = document.body.innerText.includes("دخول الأعضاء") || document.body.innerText.includes("تسجيل عضوية");
+      // الشرط: اذا الصفحة فيها "دخول الأعضاء" أو "تسجيل عضوية"
+      const loginExists = document.body.innerText.includes("دخول الأعضاء") || document.body.innerText.includes("تسجيل عضوية");
 
       if (loginExists) {
-        var container = document.createElement("div");
+        const container = document.createElement("div");
         container.classList.add("color-picker-container");
 
-        var colors = [
-          "#870d85", "#0b1b6b", "#511117", "#16c65d",
-          "#455348", "#00204d", "#6c757d"
-        ];
+        const colors = [
+  "#870d85", "#0b1b6b", "#511117", "#16c65d",
+  "#455348", "#00204d", "#6c757d"  // أضف اللون هنا
+];
 
-        colors.forEach(function(color, index) {
-          var btn = document.createElement("div");
+
+        colors.forEach((color, index) => {
+          const btn = document.createElement("div");
           btn.classList.add("color-picker");
           btn.style.background = color;
 
@@ -91,13 +102,11 @@
             btn.classList.add("selected");
           }
 
-          btn.addEventListener("click", function() {
+          btn.addEventListener("click", () => {
             changeStyle(index + 1);
-            document.querySelectorAll(".color-picker").forEach(function(e) { 
-              e.classList.remove("selected");
-            });
+            document.querySelectorAll(".color-picker").forEach(e => e.classList.remove("selected"));
             btn.classList.add("selected");
-            container.style.display = 'none';
+            container.style.display = 'none';  // إخفاء المربعات بعد اختيار اللون
           });
 
           container.appendChild(btn);
