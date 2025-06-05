@@ -1,0 +1,110 @@
+
+<head>
+  <meta charset="UTF-8">
+  <title>اختيار اللون</title>
+
+  <style>
+    .color-picker-container {
+      position: fixed;
+      top: 3%;
+      left: 55%;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: wrap;
+      transform: translateX(-50%);
+      max-width: 90%;
+    }
+    .color-picker {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      cursor: pointer;
+      border: 1px solid white;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+    }
+    .color-picker.selected {
+      outline: 2px solid black;
+    }
+    @media screen and (max-width: 600px) {
+      .color-picker-container {
+        top: 1%;
+        right: 5%;
+        left: unset;
+        transform: unset;
+        gap: 8px;
+      }
+      .color-picker {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    @media screen and (min-width: 600px) {
+      .color-picker-container {
+        top: 1%;
+        left: 55%;
+        transform: translateX(-50%);
+        gap: 5px;
+      }
+      .color-picker {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  </style>
+
+  <script>
+    var _0x1a3b=["\x67\x65\x74\x49\x74\x65\x6D","\x73\x65\x6C\x65\x63\x74\x65\x64\x53\x74\x79\x6C\x65"]; 
+    var savedStyle = localStorage.getItem("selectedStyle") || "1";
+
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.id = "dynamic-style";
+    link.href = "https://raw.githack.com/khaledry/watar0/main/watar0000"+savedStyle+".css";
+    document.head.appendChild(link);
+
+    function changeStyle(num) {
+      document.getElementById("dynamic-style").href = "https://raw.githack.com/khaledry/watar0/main/watar0000"+num+".css";
+      localStorage.setItem("selectedStyle", num);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      var loginExists = document.body.innerText.includes("دخول الأعضاء") || document.body.innerText.includes("تسجيل عضوية");
+
+      if (loginExists) {
+        var container = document.createElement("div");
+        container.classList.add("color-picker-container");
+
+        var colors = [
+          "#870d85", "#0b1b6b", "#511117", "#16c65d",
+          "#455348", "#00204d", "#6c757d"
+        ];
+
+        colors.forEach(function(color, index) {
+          var btn = document.createElement("div");
+          btn.classList.add("color-picker");
+          btn.style.background = color;
+
+          if (savedStyle == (index + 1)) {
+            btn.classList.add("selected");
+          }
+
+          btn.addEventListener("click", function() {
+            changeStyle(index + 1);
+            document.querySelectorAll(".color-picker").forEach(function(e) { 
+              e.classList.remove("selected");
+            });
+            btn.classList.add("selected");
+            container.style.display = 'none';
+          });
+
+          container.appendChild(btn);
+        });
+
+        document.body.appendChild(container);
+      }
+    });
+  </script>
+</head>
